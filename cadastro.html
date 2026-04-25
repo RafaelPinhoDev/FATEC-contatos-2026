@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="./app.js" defer type="module"></script>
+    <title>Cadastro</title>
+  </head>
+  <body>
+    <header></header>
+    <main class="container mt-5">
+      <article class="row justify-content-center">
+        <div class="col-md-6 border border-primary rounded-3 shadow-sm">
+          <form class="p-4 ">
+            <h1 class="text-center fs-3 fw-bold mb-4 text-primary">Formulário</h1>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome Completo: (Obrigatório)</label>
+                <input id="nome" class="form-control" type="text" placeholder="Ex: Pedro Alves da Silva" required>
+            </div>
+            <div class="mb-3">
+                <label for="celular" class="form-label">Celular: (Obrigatório)</label>
+                <input id="celular" class="form-control" type="tel" placeholder="Ex 11903752567" required>
+            </div>
+            <div class="mb-3">
+                <label for="foto" class="form-label">Adicione o link da sua foto (Obrigatório)</label>
+                <input id="foto" class="form-control" type="url" placeholder="https://exemplo.com/suafoto.jpg" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail: (Obrigatório)</label>
+                <input id="email" class="form-control" type="email" placeholder="Ex: seunome@gmail.com" required >
+            </div>
+            <div class="mb-3">
+                <label for="endereco" class="form-label">Endereço: (Obrigatório)</label>
+                <input id="endereco" class="form-control" type="text" placeholder="Ex: Rua das Orquideas, 123" required >
+            </div>
+            <div class="mb-3">
+                <label for="cidade" class="form-label">Cidade: (Obrigatório)</label>
+                <input id="cidade" class="form-control" type="text" placeholder="Ex: São Roque" required >
+            </div>
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-success flex-fill">Salvar</button>
+                <button type="reset" class="btn btn-warning flex-fill">Limpar Campos</button>
+            </div>
+          </form>
+        </div>
+      </article>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
