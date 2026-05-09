@@ -1,5 +1,127 @@
+@charset "UTF-8";
+
+/* Reset e Configurações Gerais */
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Título Principal */
+h1.text-primary {
+    margin-top: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Estilização do Card */
+.card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* ESSENCIAL PARA ALINHAR BOTÕES */
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    min-height: 520px; /* Altura mínima para manter padrão */
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagem */
+.card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+/* Título e ID */
+.titulo-card {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.id-pequeno {
+    font-size: 0.85rem;
+    background-color: #212529;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* Container de Informações - O segredo do alinhamento */
+.info-container {
+    flex-grow: 1; /* Isso faz esse bloco ocupar todo o espaço vazio */
+    margin-bottom: 20px;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+/* Grupo de Botões */
+.btn-group-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto; /* Empurra para o fim do card */
+}
+
+.btn {
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border: none;
+}
+
+
+section .btn {
+    height: 45px; /* Altura padrão para alinhar com o input */
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+#input-contato {
+    height: 45px;
+    border-radius: 8px;
+}
+
+/* Responsividade para telas de celular */
+@media (max-width: 768px) {
+    .col-md-10 {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+    
+    #input-contato, #pesquisar, a.btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
 }

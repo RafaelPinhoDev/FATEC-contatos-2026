@@ -17,6 +17,7 @@
         <div class="col-md-6 border border-primary rounded-3 shadow-sm">
           <form id="form-cadastro" class="p-4">
             <h1 class="text-center fs-3 fw-bold mb-4 text-primary">Formulário</h1>
+            <input type="hidden" id="id">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome Completo: (Obrigatório)</label>
                 <input id="nome" class="form-control" type="text" placeholder="Ex: Pedro Alves da Silva" required>
@@ -42,7 +43,7 @@
                 <input id="cidade" class="form-control" type="text" placeholder="Ex: São Roque" required >
             </div>
             <div class="d-flex gap-2 mt-4">
-                <button type="submit" id="cadastrar" class="btn btn-success flex-fill">Cadastrar</button>
+                <button type="submit" id="cadastrar" class="btn btn-success flex-fill">Salvar</button>
                 <button type="reset" class="btn btn-warning flex-fill">Limpar Campos</button>
             </div>
           </form>

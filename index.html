@@ -1,22 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script src="./app.js" defer type="module"></script>
+    <link rel="stylesheet" href="./style.css" />
     <title>Contatos</title>
-</head>
-<body>
-    <header>
+  </head>
+  <body>
+    <header></header>
+    <main class="container mt-5">
+      <article id="article-contatos">
+        <h1 class="text-center fs-3 fw-bold mb-4 text-primary"></h1>
 
-    </header>
-    <main class="container">
-        <article>
-            
-        </article>
+        <!-- Campo de busca-->
+        <section class="row justify-content-center mb-5">
+          <div class="col-md-10 d-flex align-items-center justify-content-center gap-2">
+            <label for="input-contato" class="text-nowrap mb-0 fw-bold" >Pesquisar:</label>
+            <input id="input-contato" class="form-control border-2" type="text" placeholder="Ex: Pedro"/>
+            <button id="pesquisar" class="btn btn-success fw-bold px-4"> Pesquisar </button>
+           <a href="./cadastro.html" id="botao-cadastrar" class="btn btn-primary fw-bold text-nowrap px-4 d-flex align-items-center"> + Novo Contato </a>
+          </div>
+        </section>
+
+        <!--Carregar contatos -->
+        <section class="row g-4" id="lista-contatos"></section>
+      </article>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
