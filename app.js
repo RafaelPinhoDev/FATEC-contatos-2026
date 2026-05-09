@@ -3,16 +3,14 @@
 import { preview } from "./preview.js"
 import { getContatos, criarContato, atualizarContato, deletarContato } from "./contatos.js"
 
-
-
-
+// Adiciona ou Edita o Formulário
 async function cadastrarEditarForm(evento) {
 
     // O prevent default impede que a página resete.
     evento.preventDefault();
-
+   
     const id = document.getElementById('id').value
-    const arquivoFoto = document.getElementById('preview-input').files[0]; 
+    const arquivoFoto = document.getElementById('preview-input').files[0]
 
     const dadosContato = {
         nome: document.getElementById('nome').value,
@@ -27,21 +25,19 @@ async function cadastrarEditarForm(evento) {
 
     // Se o usuário selecionou uma imagem nova no input de arquivo
     if (arquivoFoto) {
-        // Criamos uma Promessa para ler o arquivo e esperar ele terminar
         const lerArquivo = (arquivo) => {
             return new Promise((resolve, reject) => {
-                const leitor = new FileReader();
-                leitor.onload = (e) => resolve(e.target.result);
-                leitor.onerror = (e) => reject(e);
-                leitor.readAsDataURL(arquivo);
-            });
-        };
+                const leitor = new FileReader()
+                leitor.onload = (e) => resolve(e.target.result)
+                leitor.onerror = (e) => reject(e)
+                leitor.readAsDataURL(arquivo)
+            })
+        }
 
         try {
-            // Sobrescreve o campo foto com a string da imagem real (Base64)
             dadosContato.foto = await lerArquivo(arquivoFoto);
         } catch (erro) {
-            console.error("Erro ao ler a imagem:", erro);
+            console.error("Erro ao ler a imagem:" + erro.message);
         }
     }
 
@@ -60,22 +56,8 @@ async function cadastrarEditarForm(evento) {
     }
 }
 
-function editarContato(id) {
-    window.location.href = `cadastro.html?id=${id}`
-}
 
-async function excluirContato(id, elementoParaRemover) {
-    const confirmar = confirm("Deseja realmente excluir?")
-    if (confirmar) {
-        try {
-            await deletarContato(id)
-            if (elementoParaRemover) elementoParaRemover.remove()
-        } catch (erro) {
-            alert("Erro ao excluir: " + erro.message)
-        }
-    }
-}
-
+// Função para criar a estrutura do contato
 function criarEstruturaContato(contato) {
     const listaContatos = document.getElementById('lista-contatos')
 
@@ -86,13 +68,20 @@ function criarEstruturaContato(contato) {
     idInterface.textContent = `Id: ${contato.id}`
     idInterface.classList.add('id-pequeno')
 
+
     const imagem = document.createElement('img')
-    imagem.src = contato.foto
+
+    // Carrega uma foto padrão se não tiver foto de perfil
+    if (contato.foto === ""){
+        imagem.src = "./img/sem-foto.png"
+    }else{
+        imagem.src = contato.foto
+    }
     imagem.alt = contato.nome
 
     const nome = document.createElement('h3')
     nome.textContent = contato.nome
-    nome.classList.add('titulo-card')
+    nome.classList.add('titulo-card', 'mt-2')
 
     const celular = document.createElement('p')
     celular.textContent = `Celular: ${contato.celular}`
@@ -119,17 +108,15 @@ function criarEstruturaContato(contato) {
     btnExcluir.onclick = () => excluirContato(contato.id, coluna)
     
 
-    // 1. Crie um container para as informações
     const infoContainer = document.createElement('div')
     infoContainer.classList.add('info-container')
     infoContainer.append(nome, celular, endereco, cidade)
 
-    // 2. Crie um container para os botões
     const btnGroup = document.createElement('div')
     btnGroup.classList.add('btn-group-custom')
     btnGroup.append(btnEditar, btnExcluir)
 
-    // 3. Monte o card na ordem certa
+
     card.append(imagem, idInterface, infoContainer, btnGroup)
 
     const coluna = document.createElement('div')
@@ -141,7 +128,29 @@ function criarEstruturaContato(contato) {
     listaContatos.appendChild(coluna)
 }
 
+
+// Função de editar contato
+function editarContato(id) {
+    window.location.href = `cadastro.html?id=${id}`
+}
+
+
+// Função de excluir contato
+async function excluirContato(id, elementoParaRemover) {
+    const confirmar = confirm("Deseja realmente excluir?")
+    if (confirmar) {
+        try {
+            await deletarContato(id)
+            if (elementoParaRemover) elementoParaRemover.remove()
+        } catch (erro) {
+            alert("Erro ao excluir: " + erro.message)
+        }
+    }
+}
+
+
 async function carregarContatos() {
+
     const inputBusca = document.getElementById('input-contato')
     const buscaTexto = inputBusca ? inputBusca.value.toLowerCase() : ""
     const listaContatos = document.getElementById('lista-contatos')
@@ -169,10 +178,12 @@ async function carregarContatos() {
         })
 
     } catch (erro) {
-        console.error("Erro ao acessar API", erro)
+        console.error("Erro ao acessar API" + erro.message)
     }
 }
 
+
+// Preencher as informações do form ao editar
 async function preencherFormulario(id) {
     try {
         const contatos = await getContatos()
@@ -189,6 +200,12 @@ async function preencherFormulario(id) {
 
             const titulo = document.querySelector('h1')
             if (titulo) titulo.textContent = "Editar Contato"
+
+            // Função pra mudar pra imagem atual ao editar
+            const imgPreview = document.getElementById('preview-image')
+            if (imgPreview && contato.foto) {
+                imgPreview.src = contato.foto 
+            }
             
             const btnSalvar = document.getElementById('cadastrar')
             if (btnSalvar) btnSalvar.textContent = "Atualizar Contato"
@@ -198,25 +215,61 @@ async function preencherFormulario(id) {
     }
 }
 
-// 1. Captura o ID da URL (ex: cadastro.html?id=10)
+
+function limparFoto() {
+
+    const previewImage = document.getElementById('preview-image')
+    const inputHiddenFoto = document.getElementById('foto')
+    const inputFileInput = document.getElementById('preview-input')
+
+    if (previewImage) {
+        previewImage.src = "./img/upload-icon.svg"
+    }
+    
+    if (inputHiddenFoto) {
+        inputHiddenFoto.value = ""
+    }
+
+
+    if (inputFileInput) {
+        inputFileInput.value = ""
+    }
+    
+    alert("Visualização da foto resetada.")
+}
+
+// -------------------------------------------
+
+// ------------ Botões -----------------------
+
+
+// 1. Captura o ID da URL (ex: cadastro.html?id=10) - implementado com IA
 const urlParams = new URLSearchParams(window.location.search)
 const idParaEditar = urlParams.get('id')
 
-// 2. Se existir um ID na URL, significa que viemos do botão "Editar"
+// 2. Se existir um ID na URL, significa que viemos do botão "Editar" - IA
 if (idParaEditar && document.getElementById('form-cadastro')) {
     preencherFormulario(idParaEditar)
 }
+
 
 // Botão de cadastrar e editar contato
 const form = document.getElementById('form-cadastro')
 if (form) {
     form.addEventListener('submit', cadastrarEditarForm)
 }
-
+// Carregar contatos
 document.getElementById('pesquisar')?.addEventListener('click', carregarContatos)
 
 if (document.getElementById('lista-contatos')) {
     document.addEventListener('DOMContentLoaded', carregarContatos)
 }
 
-document.getElementById('preview-input').addEventListener('change', preview);
+const btnLimparFoto = document.getElementById('limpar-foto')
+// O if ér usado como método de segurança quando se trabalha com muitas paginas em um so script para evitar erros
+if (btnLimparFoto) {
+    btnLimparFoto.addEventListener('click', limparFoto)
+}
+
+// Trocar foto do preview
+document.getElementById('preview-input').addEventListener('change', preview)

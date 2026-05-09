@@ -13,6 +13,40 @@ A ideia e praticar a integracao entre Front-end e API REST usando JavaScript pur
 Nesta etapa, a camada de servico da API ja esta pronta no projeto.
 Cada aluno deve dar fork neste repositorio e complementar a parte de interface e integracao no navegador.
 
+
+## Observação do aluno
+Fiz ajustes utilizando IA para tratar os conflitos de utilizar duas páginas separadas de consulta e cadastro.
+
+Segue abaixo alguns ajustes:
+
+```js
+  //Ele só tenta carregar a galeria de contato do index se ela existir 
+if (document.getElementById('lista-contatos')) {
+    document.addEventListener('DOMContentLoaded', carregarContatos)
+}
+
+// Só ativa o evento do formulário se o 'form-cadastro' existir da página de cadastrp
+const form = document.getElementById('form-cadastro')
+if (form) {
+    form.addEventListener('submit', cadastrarEditarForm)
+}
+
+```
+
+```js
+// Usa para diferenciar a pagina de cadastro e edição verificando se possui id na pagina ou não, se tem id a página vira de edição, se não vira de cadastro
+
+const urlParams = new URLSearchParams(window.location.search)
+const idParaEditar = urlParams.get('id')
+
+// Se tem ID na URL e estamos na página de formulário, ele "saca" que é edição
+if (idParaEditar && document.getElementById('form-cadastro')) {
+    preencherFormulario(idParaEditar)
+}
+
+```
+
+
 ## Objetivo da Atividade
 Construir um front-end funcional para consumir a API de contatos, aplicando os conceitos de:
 - arquitetura cliente-servidor
@@ -83,17 +117,17 @@ Observacao:
 ![Exemplo de Issue](./issue.jpg)
 
 ## Checklist do Aluno
-- [ ] Fiz o fork do repositorio.
-- [ ] Fiz commits a cada funcionalidade (ou pelo menos um para cada aula).
-- [ ] Meu projeto abre sem erros no navegador.
-- [ ] Consigo listar contatos da API.
-- [ ] Consigo cadastrar novo contato.
-- [ ] Consigo atualizar contato da API.
-- [ ] Consigo deletar contato da API.
-- [ ] Minha interface possui formulario e listagem.
-- [ ] Meu codigo esta organizado e legivel.
-- [ ] Nao exclui os arquivos base do repositorio.
-- [ ] Entreguei o link do repositorio.
+- [x] Fiz o fork do repositorio.
+- [x] Fiz commits a cada funcionalidade (ou pelo menos um para cada aula).
+- [x] Meu projeto abre sem erros no navegador.
+- [x] Consigo listar contatos da API.
+- [x] Consigo cadastrar novo contato.
+- [x] Consigo atualizar contato da API.
+- [x] Consigo deletar contato da API.
+- [x] Minha interface possui formulario e listagem.
+- [x] Meu codigo esta organizado e legivel.
+- [x] Nao exclui os arquivos base do repositorio.
+- [x] Entreguei o link do repositorio.
 
 ---
 
