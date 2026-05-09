@@ -1,4 +1,10 @@
+'use strict'
+
+import { preview } from "./preview.js"
 import { getContatos, criarContato, atualizarContato, deletarContato } from "./contatos.js"
+
+
+
 
 async function cadastrarEditarForm(evento) {
 
@@ -6,6 +12,7 @@ async function cadastrarEditarForm(evento) {
     evento.preventDefault();
 
     const id = document.getElementById('id').value
+    const arquivoFoto = document.getElementById('preview-input').files[0]; 
 
     const dadosContato = {
         nome: document.getElementById('nome').value,
@@ -14,6 +21,28 @@ async function cadastrarEditarForm(evento) {
         email: document.getElementById('email').value,
         endereco: document.getElementById('endereco').value,
         cidade: document.getElementById('cidade').value
+    }
+
+
+
+    // Se o usuário selecionou uma imagem nova no input de arquivo
+    if (arquivoFoto) {
+        // Criamos uma Promessa para ler o arquivo e esperar ele terminar
+        const lerArquivo = (arquivo) => {
+            return new Promise((resolve, reject) => {
+                const leitor = new FileReader();
+                leitor.onload = (e) => resolve(e.target.result);
+                leitor.onerror = (e) => reject(e);
+                leitor.readAsDataURL(arquivo);
+            });
+        };
+
+        try {
+            // Sobrescreve o campo foto com a string da imagem real (Base64)
+            dadosContato.foto = await lerArquivo(arquivoFoto);
+        } catch (erro) {
+            console.error("Erro ao ler a imagem:", erro);
+        }
     }
 
     try {
@@ -189,3 +218,5 @@ document.getElementById('pesquisar')?.addEventListener('click', carregarContatos
 if (document.getElementById('lista-contatos')) {
     document.addEventListener('DOMContentLoaded', carregarContatos)
 }
+
+document.getElementById('preview-input').addEventListener('change', preview);
