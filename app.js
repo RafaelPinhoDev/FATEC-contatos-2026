@@ -129,44 +129,25 @@ function criarEstruturaContato(contato) {
 }
 
 
-// Função de editar contato
-function editarContato(id) {
-    window.location.href = `cadastro.html?id=${id}`
-}
-
-
-// Função de excluir contato
-async function excluirContato(id, elementoParaRemover) {
-    const confirmar = confirm("Deseja realmente excluir?")
-    if (confirmar) {
-        try {
-            await deletarContato(id)
-            if (elementoParaRemover) elementoParaRemover.remove()
-        } catch (erro) {
-            alert("Erro ao excluir: " + erro.message)
-        }
-    }
-}
-
 
 async function carregarContatos() {
 
-    const inputBusca = document.getElementById('input-contato')
-    const buscaTexto = inputBusca ? inputBusca.value.toLowerCase() : ""
+    const inputBusca = document.getElementById('input-contato').value.toLowerCase()
     const listaContatos = document.getElementById('lista-contatos')
 
     if (!listaContatos) return
 
+    // Filtra as buscas e vai pesquisando por aproximação
     try {
         let contatos = await getContatos() 
 
-        if (buscaTexto !== "") {
+        if (inputBusca !== "") {
             contatos = contatos.filter(contato => 
-                contato.nome.toLowerCase().includes(buscaTexto)
+                contato.nome.toLowerCase().includes(inputBusca)
             )
         }
 
-        listaContatos.innerHTML = ""
+        listaContatos.replaceChildren()
 
         if (contatos.length === 0) {
             listaContatos.innerHTML = `<p class="text-center w-100">Nenhum contato encontrado.</p>`
@@ -182,12 +163,30 @@ async function carregarContatos() {
     }
 }
 
+// Função de editar contato
+function editarContato(id) {
+    window.location.href = `cadastro.html?id=${id}`
+}
+
+
+// Função de excluir contato
+async function excluirContato(id) {
+    const confirmar = confirm("Deseja realmente excluir?")
+    if (confirmar) {
+        try {
+            await deletarContato(id)
+            carregarContatos()
+        } catch (erro) {
+            alert("Erro ao excluir: " + erro.message)
+        }
+    }
+}
 
 // Preencher as informações do form ao editar
 async function preencherFormulario(id) {
     try {
         const contatos = await getContatos()
-        const contato = contatos.find(c => c.id == id)
+        const contato = contatos.find(contato => contato.id == id)
 
         if (contato) {
             document.getElementById('id').value = contato.id
